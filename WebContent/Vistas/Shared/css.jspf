@@ -1,0 +1,8 @@
+<%@ page pageEncoding="UTF-8" %>
+
+<link rel="stylesheet" href="${pageContext.request.contextPath}/Content/fontawesome/css/all.min.css" type="text/css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/Content/fontawesome/css/fontawesome.min.css" type="text/css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/Content/fontawesome/css/brands.min.css" type="text/css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/Content/fontawesome/css/solid.min.css" type="text/css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/Content/bootstrap/css/bootstrap.min.css" type="text/css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/Content/DataTables/datatables.min.css" type="text/css">

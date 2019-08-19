@@ -1,0 +1,399 @@
+<%@ page pageEncoding="UTF-8" %>
+<link rel="icon" type="image/png" href="${pageContext.request.contextPath}/Resources/Images/favicon.png">
+<div>
+<script>
+	$lang = {
+		    "sProcessing": "Procesando...",
+		    "sLengthMenu": "Mostrar _MENU_ registros",
+		    "sZeroRecords": "No se encontraron resultados",
+		    "sEmptyTable": "No hay informacion disponible",
+		    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+		    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+		    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+		    "sInfoPostFix": "",
+		    "sSearch": "Buscar:",
+		    "sUrl": "",
+		    "sInfoThousands": ",",
+		    "sLoadingRecords": "Cargando...",
+		    "oPaginate": {
+		        "sFirst": "Primero",
+		        "sLast": "Último",
+		        "sNext": "Siguiente",
+		        "sPrevious": "Anterior"
+		    },
+		    "oAria": {
+		        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+		        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+		    }
+		};
+</script>
+	 <style>
+	 
+	 /*MENU DROPDOWN WITH HOVER*/
+	 * {
+		  /*box-sizing: border-box;*/
+		}
+		body {
+		  /* font-family: 'Open Sans', sans-serif;
+		  background: #374954;
+		  color: white;
+		  text-align: center; */
+		}
+		#main {
+		  position: relative;
+		  list-style: none;
+		  background: #6bbe92;
+		  font-weight: 400;
+		  font-size: 0;
+		  text-transform: uppercase;
+		  display: inline-block;
+		  padding: 0;
+		  /*margin: 50px auto;*/
+		}
+		#main li {
+		  font-size: 0.8rem;
+		  display: inline-block;
+		  position: relative;
+		  padding: 15px 20px;
+		  cursor: pointer;
+		  z-index: 5;
+		  min-width: 120px;
+		}
+		li {
+		  margin: 0;
+		}
+		.drop {
+		  overflow: hidden;
+		  list-style: none;
+		  position: absolute;
+		  padding: 0;
+		  width: 100%;
+		  left: 0;
+		  top: 48px;
+		}
+		.drop div {
+		  -webkit-transform: translate(0, -100%);
+		  -moz-transform: translate(0, -100%);
+		  -ms-transform: translate(0, -100%);
+		  transform: translate(0, -100%);
+		  -webkit-transition: all 0.5s 0.1s;
+		  -moz-transition: all 0.5s 0.1s;
+		  -ms-transition: all 0.5s 0.1s;
+		  transition: all 0.5s 0.1s;
+		  position: relative;
+		}
+		.drop li {
+		  display: block;
+		  padding: 0;
+		  width: 100%;
+		  background: #3e8760 !important;
+		}
+		#marker {
+		  height: 6px;
+		  background: #3e8760 !important;
+		  position: absolute;
+		  bottom: 0;
+		  width: 120px;
+		  z-index: 2;
+		  -webkit-transition: all 0.35s;
+		  -moz-transition: all 0.35s;
+		  -ms-transition: all 0.35s;
+		  transition: all 0.35s;
+		}
+		#main li:nth-child(1):hover ul div {
+		  -webkit-transform: translate(0, 0);
+		  -moz-transform: translate(0, 0);
+		  -ms-transform: translate(0, 0);
+		  transform: translate(0, 0);
+		}
+		#main li:nth-child(1):hover ~ #marker {
+		  -webkit-transform: translate(0px0);
+		  -moz-transform: translate(0px0);
+		  -ms-transform: translate(0px0);
+		  transform: translate(0px0);
+		}
+		#main li:nth-child(2):hover ul div {
+		  -webkit-transform: translate(0, 0);
+		  -moz-transform: translate(0, 0);
+		  -ms-transform: translate(0, 0);
+		  transform: translate(0, 0);
+		}
+		#main li:nth-child(2):hover ~ #marker {
+		  -webkit-transform: translate(120px0);
+		  -moz-transform: translate(120px0);
+		  -ms-transform: translate(120px0);
+		  transform: translate(120px0);
+		}
+		#main li:nth-child(3):hover ul div {
+		  -webkit-transform: translate(0, 0);
+		  -moz-transform: translate(0, 0);
+		  -ms-transform: translate(0, 0);
+		  transform: translate(0, 0);
+		}
+		#main li:nth-child(3):hover ~ #marker {
+		  -webkit-transform: translate(240px0);
+		  -moz-transform: translate(240px0);
+		  -ms-transform: translate(240px0);
+		  transform: translate(240px0);
+		}
+		#main li:nth-child(4):hover ul div {
+		  -webkit-transform: translate(0, 0);
+		  -moz-transform: translate(0, 0);
+		  -ms-transform: translate(0, 0);
+		  transform: translate(0, 0);
+		}
+		#main li:nth-child(4):hover ~ #marker {
+		  -webkit-transform: translate(360px0);
+		  -moz-transform: translate(360px0);
+		  -ms-transform: translate(360px0);
+		  transform: translate(360px0);
+		}
+			 
+	 /*-----------------------------------------------*/
+	 
+	 /*ICONOS COPADOS*/
+	 
+	 .flex-container {
+	  display: flex;
+	  justify-content: center;
+	  align-items: center;
+	  height: 100%;
+	}
+	.link {
+	  display: flex;
+	  justify-content: center;
+	  align-items: center;
+	  -webkit-transition: 0.25s;
+	  transition: 0.25s;
+	  text-decoration: none;
+	  color: #fff;
+	  font-size: 45px;
+	  background-color: rgba(192,192,192,0.7);
+	  border-radius: 50%;
+	  height: 70px;
+	  width: 70px;
+	  /*margin-left: 40px;
+	  margin-right: 40px;*/
+	}
+	.link:hover {
+	  -webkit-transition: 0.25s;
+	  transition: 0.25s;
+	  background-color: #c0c0c0;
+	  color: #000;
+	}
+	/*ICONOS COPADOS*/
+	
+	/*NAVBAR*/
+		
+		html,
+		body {
+			margin: 0;
+			height: 100vh;
+			width: 100vw;
+			overflow: hidden;
+			overflow-y: visible;
+		}
+		
+		body {
+			font-family: "Roboto", sans-serif;
+			background-image: linear-gradient(135deg, #58a573 0%, #0d442a 100%);
+		}
+		
+		h1 {
+			margin: 20px 0;
+			color: #fff;
+		}
+		
+		.center {
+			text-align: center;
+		}
+		
+		.nav-wrapper {
+			display: flex;
+			position: relative;
+			flex-direction: row;
+			flex-wrap: nowrap;
+			align-items: center;
+			justify-content: space-between;
+			margin: auto;
+			width: 90%;
+			height: 80px;
+			border-radius: 0 0 15px 15px;
+			padding: 0 25px;
+			z-index: 2;
+			background: #fff;
+			box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+		}
+		
+		.logo-container {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		
+		.logo {
+			height: 60px;
+		}
+		
+		.nav-tabs {
+			display: flex;
+			font-weight: 600;
+			font-size: 18px;
+			list-style: none;
+		}
+		
+		.nav-tab:not(:last-child) {
+			padding: 10px 25px;
+			margin: 0;
+			border-right: 1px solid #eee;
+		}
+		
+		.nav-tab:last-child {
+			padding: 10px 0 0 25px;
+		}
+		
+		.nav-tab,
+		.menu-btn {
+			cursor: pointer;
+		}
+		
+		.hidden {
+			display: none;
+		}
+		
+		@media screen and (max-width: 800px) {
+			.nav-container {
+				position: fixed;
+				display: none;
+				overflow-y: auto;
+				z-index: -1;
+				top: 0;
+				right: 0;
+				width: 280px;
+				height: 100%;
+				background: #fff;
+				box-shadow: -1px 0 2px rgba(0, 0, 0, 0.2);
+			}
+		
+			.nav-tabs {
+				flex-direction: column;
+				align-items: flex-end;
+				margin-top: 80px;
+				width: 100%;
+			}
+		
+			.nav-tab:not(:last-child) {
+				padding: 20px 25px;
+				margin: 0;
+				border-right: unset;
+				border-bottom: 1px solid #f5f5f5;
+			}
+		
+			.nav-tab:last-child {
+				padding: 15px 25px;
+			}
+		
+			.menu-btn {
+				position: relative;
+				display: block;
+				margin: 0;
+				width: 20px;
+				height: 15px;
+				cursor: pointer;
+				z-index: 2;
+				padding: 10px;
+				border-radius: 10px;
+			}
+		
+			.menu-btn .menu {
+				display: block;
+				width: 100%;
+				height: 2px;
+				border-radius: 2px;
+				background: #111;
+			}
+		
+			.menu-btn .menu:nth-child(2) {
+				margin-top: 4px;
+				opacity: 1;
+			}
+		
+			.menu-btn .menu:nth-child(3) {
+				margin-top: 4px;
+			}
+		
+			#menuToggle:checked + .menu-btn .menu {
+				transition: transform 0.2s ease;
+			}
+		
+			#menuToggle:checked + .menu-btn .menu:nth-child(1) {
+				transform: translate3d(0, 6px, 0) rotate(45deg);
+			}
+		
+			#menuToggle:checked + .menu-btn .menu:nth-child(2) {
+				transform: rotate(-45deg) translate3d(-5.71429px, -6px, 0);
+				opacity: 0;
+			}
+		
+			#menuToggle:checked + .menu-btn .menu:nth-child(3) {
+				transform: translate3d(0, -6px, 0) rotate(-45deg);
+			}
+		
+			#menuToggle:checked ~ .nav-container {
+				z-index: 1;
+				display: flex;
+				animation: menu-slide-left 0.3s ease;
+			}
+			@keyframes menu-slide-left {
+				0% {
+					transform: translateX(200px);
+				}
+				to {
+					transform: translateX(0);
+				}
+			}
+		}
+		
+		/*NAVBAR*/
+	 </style>
+	 
+	 <script>
+		 if(!location.pathname.includes('Login')){
+		 	var session = '${sessionScope.sessionUser}' == '' ? location.href = '${pageContext.request.contextPath}/Vistas/Login.jsp' : false
+			 
+		 }
+	 </script>
+
+	<div class="header">
+	
+       <div class="nav-wrapper">
+           <div class="logo-container">
+           		<div class="flex-container"><a class="link" href="${pageContext.request.contextPath}/Vistas/Home.jsp"><i class="fa fa-home"></i></a></div>
+           		<div style="color:black; font-size:18px; "><strong>
+ 				${sessionScope.sessionUser.getUsername()}
+           		</strong> </div>
+           </div>
+           <nav>
+               <input class="hidden" type="checkbox" id="menuToggle">
+               <label class="menu-btn" for="menuToggle">
+                   <div class="menu"></div>
+                   <div class="menu"></div>
+                   <div class="menu"></div>
+               </label>
+               <div class="nav-container">
+                   <ul class="nav-tabs">
+                       <li id="ListaAlumnos" class="nav-tab">Alumnos</li>
+                       <li id="ListaCursos" class="nav-tab">Cursos</li>
+                       <li id="ListaCalificaciones" class="nav-tab">Calificaciones</li>
+                       <li id="ListaDocentes" class="nav-tab">Docentes</li>
+                       <li id="Exit" class="nav-tab">Salir</li>
+                   </ul>
+               </div>
+           </nav>
+       </div>
+
+	</div>
+	
+	<div class="content">
+	<br>
+	<div class="container">

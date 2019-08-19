@@ -1,0 +1,67 @@
+<%@ page pageEncoding="UTF-8" %>
+
+	</div>
+
+	</div>
+	
+	<div class="bottom">
+	
+		<script src="${pageContext.request.contextPath}/Content/Script/Date.js"></script>
+		<script src="${pageContext.request.contextPath}/Content/fontawesome/js/brands.min.js"></script>
+		<script src="${pageContext.request.contextPath}/Content/fontawesome/js/solid.min.js"></script>
+		<script src="${pageContext.request.contextPath}/Content/fontawesome/js/fontawesome.min.js"></script>
+		<script src="${pageContext.request.contextPath}/Content/fontawesome/js/all.min.js"></script>
+		<script src="${pageContext.request.contextPath}/Content/Jquery/jquery-3.4.1.min.js"></script>
+		<script src="${pageContext.request.contextPath}/Content/bootstrap/js/bootstrap.min.js"></script>	
+		<script src="${pageContext.request.contextPath}/Content/DataTables/datatables.min.js"></script>
+		
+	</div>
+	
+	<script>
+	if('${sessionScope.sessionUser}' != ''){
+		var user = {
+			useCode: ${sessionScope.sessionUser.getId()} != null ? ${sessionScope.sessionUser.getId()} : 0,
+			userName: '${sessionScope.sessionUser.getUsername()}' != '' ? '${sessionScope.sessionUser.getUsername()}' : '',
+			userType: ${sessionScope.sessionUser.getUsertype().getCode()} != null ? ${sessionScope.sessionUser.getUsertype().getCode()} : 0
+		}
+		
+		if(user.userType != 1){
+			$('#ListaDocentes').hide();
+			$('#cardDocentes').hide();
+		}
+	}
+	</script>
+	
+	<script type="text/javascript">
+	$(() => {
+		$('#ListaAlumnos,#cardAlumnos').click((e) => {
+			e.preventDefault();
+			location.href = '${pageContext.request.contextPath}/alumno?list';
+		});
+		
+		$('#ListaCursos,#cardCursos').click((e) => {
+			e.preventDefault();
+			location.href = '${pageContext.request.contextPath}/curso?list=&userCode='+user.useCode+'&userType='+user.userType;
+		});
+		
+		$('#ListaCalificaciones,#cardCalificaciones').click((e) => {
+			e.preventDefault();
+			location.href = '${pageContext.request.contextPath}/calificacion?list&userCode='+user.useCode+'&userType='+user.userType;
+		});
+		
+		$('#ListaDocentes,#cardDocentes').click((e) => {
+			e.preventDefault();
+			location.href = '${pageContext.request.contextPath}/docente?list';
+		});
+		
+		$('#Exit').click((e) => {
+			e.preventDefault();
+			location.href = '${pageContext.request.contextPath}/Vistas/Login.jsp';
+			//$.post('${pageContext.request.contextPath}'+'/usuario?logOut', (e) => {
+				//window.location = '${pageContext.request.contextPath}/Vistas/Login.jsp';
+			//});
+		});
+	})
+	</script>
+		
+</div>
